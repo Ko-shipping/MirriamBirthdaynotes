@@ -1096,7 +1096,7 @@
   async function deleteNote(id) {
     if (!confirm('Delete this note?')) return;
     try {
-      await fetch('/api/delete-note', {
+      await fetch('/.netlify/functions/delete-note', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -1108,7 +1108,7 @@
 
   async function saveNote(note) {
     try {
-      await fetch('/api/save-note', {
+      await fetch('/.netlify/functions/save-note', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(note)
@@ -1118,7 +1118,7 @@
 
   async function loadNotes() {
     try {
-      const res = await fetch('/api/get-notes');
+      const res = await fetch('/.netlify/functions/get-notes');
       if (res.ok) notes = await res.json();
     } catch(e) { console.error('Load failed', e); }
   }
