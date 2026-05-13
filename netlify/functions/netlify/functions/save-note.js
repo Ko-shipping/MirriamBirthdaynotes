@@ -17,14 +17,14 @@ exports.handler = async (event) => {
   }
 
   try {
-    const note = JSON.parse(event.body);
+    const { id } = JSON.parse(event.body);
 
-    if (!note.id || !note.message || !note.name) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing required fields" }) };
+    if (!id) {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing note id" }) };
     }
 
     const store = getStore("mirriam-notes");
-    await store.setJSON(String(note.id), note);
+    await store.delete(String(id));
 
     return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
   } catch (err) {
