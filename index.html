@@ -544,6 +544,99 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,107,248,0.3); border-radius: 3px; }
 
+  /* Admin */
+  .admin-bar {
+    display: none;
+    text-align: center;
+    padding: 0.6rem 1.5rem;
+    background: rgba(255,91,91,0.15);
+    border-bottom: 1px solid rgba(255,91,91,0.3);
+    font-size: 0.82rem;
+    color: #FF5B5B;
+    position: relative;
+    z-index: 1;
+  }
+
+  .admin-bar.show { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+
+  .admin-exit {
+    background: rgba(255,91,91,0.2);
+    border: 1px solid rgba(255,91,91,0.4);
+    border-radius: 100px;
+    color: #FF5B5B;
+    font-size: 0.78rem;
+    padding: 3px 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .admin-exit:hover { background: rgba(255,91,91,0.35); }
+
+  .delete-btn {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #FF5B5B;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 20;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.15s, background 0.15s;
+  }
+
+  .delete-btn:hover { background: #cc3333; transform: scale(1.15); }
+  body.admin-mode .delete-btn { display: flex; }
+  body.admin-mode .note-card { overflow: visible; }
+
+  .admin-login-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,6,25,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .admin-login-modal.open { display: flex; }
+
+  .admin-login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .admin-login-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .admin-login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+  .admin-error {
+    color: #FF5B5B;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    min-height: 1rem;
+  }
+
   @media (max-width: 600px) {
     .wall { columns: 1; }
     header { padding: 3rem 1.5rem 1.5rem; }
@@ -552,6 +645,13 @@
 </head>
 <body>
 <canvas id="confetti-canvas"></canvas>
+
+<!-- Admin bar -->
+<div class="admin-bar" id="admin-bar">
+  🛡️ Admin mode — click ✕ on any note to delete it
+  <button class="admin-exit" onclick="exitAdmin()">Exit admin</button>
+</div>
+
 <div class="wrap">
 
   <header>
@@ -600,7 +700,19 @@
 
 </div>
 
-<footer>Made with love for Mirriam's birthday 🎂</footer>
+<footer>Made with love for Mirriam's birthday 🎂 <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.2;user-select:none">·</span></footer>
+
+<!-- Admin login modal -->
+<div class="admin-login-modal" id="admin-login-modal">
+  <div class="admin-login-box">
+    <h3>🛡️ Admin access</h3>
+    <p>Enter the password to manage notes</p>
+    <input type="password" id="admin-pw" placeholder="Password" style="margin-bottom:0.75rem" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <button class="submit-btn" onclick="checkAdmin()">Enter</button>
+    <div class="admin-error" id="admin-error"></div>
+    <button onclick="closeAdminLogin()" style="background:none;border:none;color:var(--muted);font-size:0.8rem;cursor:pointer;margin-top:0.75rem">Cancel</button>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
@@ -789,11 +901,11 @@
     };
 
     notes.unshift(note);
-    saveNotes();
     closeModal();
     renderWall();
     launchConfetti();
     checkMilestone();
+    saveNote(note);
   }
 
   function totalReactions(note) {
@@ -807,7 +919,7 @@
     if (!note.reactions) { const r = {}; REACTIONS.forEach(e => r[e] = 0); note.reactions = r; }
     note.reactions[emoji] = (note.reactions[emoji] || 0) + 1;
     notes.sort((a, b) => totalReactions(b) - totalReactions(a));
-    saveNotes();
+    saveNote(note);
     renderWall();
     const rect = btnEl.getBoundingClientRect();
     spawnBurst(emoji, rect.left + rect.width / 2, rect.top);
@@ -930,6 +1042,7 @@
       }).join('');
 
       card.innerHTML = `
+        <button class="delete-btn" onclick="deleteNote(${note.id})" title="Delete note">✕</button>
         <div class="note-top">
           ${note.vibe ? `<span class="note-vibe-pill" style="color:${muted}">${VIBE_EMOJIS[note.vibe]} ${note.vibe}</span>` : ''}
           ${note.prompt ? `<div class="note-prompt" style="color:${muted}">${note.prompt}</div>` : ''}
@@ -945,19 +1058,77 @@
     });
   }
 
-  function saveNotes() {
-    try { localStorage.setItem('mirriam_notes_v3', JSON.stringify(notes)); } catch(e) {}
+  // ─── Admin ────────────────────────────────────────────────
+  const ADMIN_PASSWORD = 'password';
+  let adminMode = false;
+
+  function openAdminLogin() {
+    document.getElementById('admin-login-modal').classList.add('open');
+    document.getElementById('admin-pw').value = '';
+    document.getElementById('admin-error').textContent = '';
+    setTimeout(() => document.getElementById('admin-pw').focus(), 100);
   }
 
-  function loadNotes() {
+  function closeAdminLogin() {
+    document.getElementById('admin-login-modal').classList.remove('open');
+  }
+
+  function checkAdmin() {
+    const pw = document.getElementById('admin-pw').value;
+    if (pw === ADMIN_PASSWORD) {
+      adminMode = true;
+      document.body.classList.add('admin-mode');
+      document.getElementById('admin-bar').classList.add('show');
+      closeAdminLogin();
+      renderWall();
+    } else {
+      document.getElementById('admin-error').textContent = 'Wrong password, try again.';
+    }
+  }
+
+  function exitAdmin() {
+    adminMode = false;
+    document.body.classList.remove('admin-mode');
+    document.getElementById('admin-bar').classList.remove('show');
+    renderWall();
+  }
+
+  async function deleteNote(id) {
+    if (!confirm('Delete this note?')) return;
     try {
-      const saved = localStorage.getItem('mirriam_notes_v3');
-      if (saved) notes = JSON.parse(saved);
-    } catch(e) {}
+      await fetch('/api/delete-note', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      notes = notes.filter(n => n.id !== id);
+      renderWall();
+    } catch(e) { alert('Delete failed, try again.'); }
   }
 
-  loadNotes();
-  renderWall();
+  async function saveNote(note) {
+    try {
+      await fetch('/api/save-note', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(note)
+      });
+    } catch(e) { console.error('Save failed', e); }
+  }
+
+  async function loadNotes() {
+    try {
+      const res = await fetch('/api/get-notes');
+      if (res.ok) notes = await res.json();
+    } catch(e) { console.error('Load failed', e); }
+  }
+
+  async function init() {
+    await loadNotes();
+    renderWall();
+  }
+
+  init();
 </script>
 </body>
 </html>
