@@ -1,1 +1,963 @@
-# MirriamBirthdaynotes
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mirriam ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c1: #FF6BF8;
+    --c2: #FFE94A;
+    --c3: #4BFFA5;
+    --c4: #FF5B5B;
+    --c5: #5B8FFF;
+    --c6: #FF9F4B;
+    --bg: #0D0A1A;
+    --surface: #16102B;
+    --border: rgba(255,255,255,0.12);
+    --text: #F0ECF9;
+    --muted: rgba(240,236,249,0.55);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(255,107,248,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 10%, rgba(75,255,165,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 80%, rgba(91,143,255,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 90% 70%, rgba(255,159,75,0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: breathe 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+
+  .wrap { position: relative; z-index: 1; }
+
+  header { text-align: center; padding: 4rem 2rem 2rem; }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--c1);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 35%, var(--c3) 65%, var(--c5) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    background-size: 200% 200%;
+    animation: shimmer 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+  .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .confetti-row {
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 2.5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--c1), var(--c5));
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .add-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(255,107,248,0.4);
+  }
+
+  .add-btn svg { width: 20px; height: 20px; }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    margin: 1rem auto 1.5rem;
+    max-width: 500px;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--c1);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .milestone {
+    display: none;
+    text-align: center;
+    margin: 0 auto 2rem;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(90deg, rgba(255,107,248,0.2), rgba(75,255,165,0.2));
+    border: 1px solid rgba(255,107,248,0.3);
+    border-radius: 100px;
+    font-size: 0.95rem;
+    color: var(--text);
+    max-width: 500px;
+    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .milestone.show { display: block; }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .vibe-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 1.5rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .vibe-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .vibe-btn:hover, .vibe-btn.active {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .wall {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    columns: 3 280px;
+    column-gap: 1.25rem;
+  }
+
+  @keyframes dropPin {
+    0%   { opacity: 0; transform: translateY(-70px) rotate(calc(var(--rot) + -6deg)) scale(0.75); }
+    60%  { transform: translateY(6px) rotate(var(--rot)) scale(1.04); }
+    80%  { transform: translateY(-3px) rotate(var(--rot)) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) rotate(var(--rot)) scale(1); }
+  }
+
+  .note-card {
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
+    border-radius: 4px;
+    padding: 1.5rem 1.5rem 1rem;
+    position: relative;
+    cursor: default;
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+    animation: dropPin 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  .note-card:hover {
+    transform: scale(1.03) rotate(0deg) !important;
+    box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+    z-index: 10;
+  }
+
+  .note-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 24px;
+    background: rgba(255,255,255,0.38);
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .note-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 26px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .note-top { position: relative; z-index: 1; padding-top: 0.5rem; }
+
+  .note-vibe-pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 10px;
+    border-radius: 100px;
+    background: rgba(0,0,0,0.12);
+    margin-bottom: 0.5rem;
+  }
+
+  .note-prompt {
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .note-message {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #1A1033;
+    margin-bottom: 0.75rem;
+  }
+
+  .note-img {
+    width: 100%;
+    border-radius: 3px;
+    margin-bottom: 0.75rem;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .note-author {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(26,16,51,0.75);
+  }
+
+  .note-alter {
+    font-size: 0.72rem;
+    color: rgba(26,16,51,0.5);
+    font-style: italic;
+  }
+
+  .note-date {
+    font-size: 0.68rem;
+    color: rgba(26,16,51,0.4);
+    margin-top: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .reaction-bar {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .react-btn {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 100px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    color: rgba(26,16,51,0.75);
+    transition: transform 0.15s, background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .react-btn:hover { background: rgba(0,0,0,0.18); transform: scale(1.2); }
+  .react-btn.reacted { background: rgba(0,0,0,0.2); font-weight: 600; }
+
+  .burst-emoji {
+    position: fixed;
+    font-size: 1.6rem;
+    pointer-events: none;
+    z-index: 9999;
+    animation: burstFly 0.9s ease-out forwards;
+  }
+
+  @keyframes burstFly {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-90px) scale(1.6); }
+  }
+
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+  .empty-state .big { font-size: 3rem; margin-bottom: 1rem; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,6,25,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.75rem; }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: var(--text);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .close-btn:hover { background: rgba(255,255,255,0.15); }
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .field { margin-bottom: 1.25rem; }
+
+  input[type="text"], textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus, textarea:focus { border-color: var(--c1); }
+  textarea { min-height: 110px; resize: vertical; }
+
+  .prompt-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+    line-height: 1.3;
+  }
+
+  .chip:hover, .chip.active {
+    background: rgba(255,107,248,0.15);
+    border-color: var(--c1);
+    color: var(--c1);
+  }
+
+  .vibe-select { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .vibe-opt {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .vibe-opt:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+  .vibe-opt.chosen { color: var(--text); border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.12); }
+
+  .img-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .img-upload-area:hover { border-color: var(--c3); background: rgba(75,255,165,0.05); }
+  .img-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; padding: 0; border: none; background: transparent; }
+  .img-upload-area .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .img-upload-area p { font-size: 0.85rem; color: var(--muted); }
+  .img-upload-area .preview { max-width: 100%; border-radius: 6px; max-height: 180px; object-fit: cover; display: none; }
+
+  .color-pick { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .color-swatch {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.chosen { border-color: white; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--c1), var(--c5));
+    border: none;
+    border-radius: 100px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,107,248,0.3); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .wall { columns: 1; }
+    header { padding: 3rem 1.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div class="wrap">
+
+  <header>
+    <div class="header-label">A wall of love for</div>
+    <h1>Happy Birthday<br>Mirriam</h1>
+    <p class="subtitle">Leave her a message she'll never forget ✨</p>
+    <div class="confetti-row">🌈 🍄 ✨ 🦋 🪩 💜 🌀</div>
+    <button class="add-btn" onclick="openModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      Leave a message
+    </button>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num" id="count">0</div>
+      <div class="stat-label">Messages</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="react-total">0</div>
+      <div class="stat-label">Reactions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="top-vibe">—</div>
+      <div class="stat-label">Top vibe</div>
+    </div>
+  </div>
+
+  <div id="milestone" class="milestone"></div>
+
+  <div class="vibe-filter">
+    <button class="vibe-btn active" data-vibe="all" onclick="filterVibe(this)">✨ All vibes</button>
+    <button class="vibe-btn" data-vibe="Euphoric" onclick="filterVibe(this)">🌈 Euphoric</button>
+    <button class="vibe-btn" data-vibe="Tender" onclick="filterVibe(this)">💜 Tender</button>
+    <button class="vibe-btn" data-vibe="Chaotic" onclick="filterVibe(this)">🌀 Chaotic</button>
+    <button class="vibe-btn" data-vibe="Cosmic" onclick="filterVibe(this)">🍄 Cosmic</button>
+    <button class="vibe-btn" data-vibe="Nostalgic" onclick="filterVibe(this)">🕯️ Nostalgic</button>
+  </div>
+
+  <main class="wall" id="wall">
+    <div class="empty-state" id="empty-state">
+      <div class="big">💌</div>
+      <p>Be the first to leave Mirriam a message!</p>
+    </div>
+  </main>
+
+</div>
+
+<footer>Made with love for Mirriam's birthday 🎂</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <h2>Leave your message</h2>
+    <p class="modal-sub">Pick a prompt, choose your vibe, make it from the heart 💜</p>
+
+    <div class="field">
+      <label>Choose a prompt (optional)</label>
+      <div class="prompt-chips" id="chips">
+        <div class="chip" onclick="selectChip(this, 'A favourite memory we share...')">💭 Favourite memory</div>
+        <div class="chip" onclick="selectChip(this, 'The moment I knew you were one of a kind...')">✨ One of a kind</div>
+        <div class="chip" onclick="selectChip(this, 'The most chaotic/amazing night we had together...')">🌀 Chaotic night</div>
+        <div class="chip" onclick="selectChip(this, 'Something you said that stuck with me...')">💬 Words that stayed</div>
+        <div class="chip" onclick="selectChip(this, 'What I love most about you is...')">💜 What I love</div>
+        <div class="chip" onclick="selectChip(this, 'You\'ve made my life better by...')">🌱 Better because of you</div>
+        <div class="chip" onclick="selectChip(this, 'Something I want you to know on your birthday...')">🎂 Birthday message</div>
+        <div class="chip" onclick="selectChip(this, 'The energy you bring to every room...')">⚡ Your energy</div>
+        <div class="chip" onclick="selectChip(this, 'Your best outfit era, ranked...')">👗 Outfit era</div>
+        <div class="chip" onclick="selectChip(this, 'If Mirriam were a festival, she would be...')">🎪 You as a festival</div>
+        <div class="chip" onclick="selectChip(this, 'A song / vibe / alter-ego that screams Mirriam...')">🎵 Your vibe</div>
+        <div class="chip" onclick="selectChip(this, 'Something only Mirriam could pull off...')">💅 Only you</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Your message *</label>
+      <textarea id="msg-text" placeholder="Write something beautiful..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Your name *</label>
+      <input type="text" id="msg-name" placeholder="How should Mirriam know you?">
+    </div>
+
+    <div class="field">
+      <label>Your alter ego (optional)</label>
+      <input type="text" id="msg-alter" placeholder="e.g. The Cosmic Disco Witch, Stardust Steve...">
+    </div>
+
+    <div class="field">
+      <label>Your vibe *</label>
+      <div class="vibe-select">
+        <div class="vibe-opt" data-vibe="Euphoric" onclick="selectVibe(this)">🌈 Euphoric</div>
+        <div class="vibe-opt" data-vibe="Tender" onclick="selectVibe(this)">💜 Tender</div>
+        <div class="vibe-opt" data-vibe="Chaotic" onclick="selectVibe(this)">🌀 Chaotic</div>
+        <div class="vibe-opt" data-vibe="Cosmic" onclick="selectVibe(this)">🍄 Cosmic</div>
+        <div class="vibe-opt" data-vibe="Nostalgic" onclick="selectVibe(this)">🕯️ Nostalgic</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Add a photo (optional)</label>
+      <div class="img-upload-area">
+        <input type="file" accept="image/*" id="img-input" onchange="handleImage(event)">
+        <div id="upload-placeholder">
+          <div class="upload-icon">📸</div>
+          <p>Tap to upload a photo or memory</p>
+        </div>
+        <img class="preview" id="img-preview" alt="Preview">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Note colour</label>
+      <div class="color-pick">
+        <div class="color-swatch chosen" style="background:#FF6BF8" data-color="#FF6BF8" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#FFE94A" data-color="#FFE94A" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#4BFFA5" data-color="#4BFFA5" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#FF9F4B" data-color="#FF9F4B" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#5B8FFF" data-color="#5B8FFF" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#FF85B3" data-color="#FF85B3" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#C77DFF" data-color="#C77DFF" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#FFFACC" data-color="#FFFACC" onclick="pickColor(this)"></div>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitNote()">Post my message 💌</button>
+  </div>
+</div>
+
+<script>
+  const REACTIONS = ['🌈','🍄','💜','✨','🪩'];
+  const VIBE_EMOJIS = { Euphoric:'🌈', Tender:'💜', Chaotic:'🌀', Cosmic:'🍄', Nostalgic:'🕯️' };
+  const MILESTONES = { 5:'5 people love Mirriam! 🎉', 10:'10 messages of love! 🌈', 20:'20 messages — the party never stops! 🪩', 30:'30 people showed up for Mirriam! 💜', 50:'50 messages — absolute queen! 👑' };
+  const NOTE_ROTATIONS = [-3, -1.5, 0, 1.5, 3, -2, 2];
+
+  let notes = [];
+  let selectedColor = '#FF6BF8';
+  let selectedPrompt = '';
+  let selectedVibe = '';
+  let imageData = null;
+  let activeFilter = 'all';
+  let shownMilestones = new Set();
+
+  function openModal() {
+    imageData = null;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+    resetForm();
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  function resetForm() {
+    document.getElementById('msg-text').value = '';
+    document.getElementById('msg-name').value = '';
+    document.getElementById('msg-alter').value = '';
+    document.getElementById('img-input').value = '';
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('upload-placeholder').style.display = 'block';
+    imageData = null;
+    selectedPrompt = '';
+    selectedVibe = '';
+    selectedColor = '#FF6BF8';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.vibe-opt').forEach(v => v.classList.remove('chosen'));
+    document.querySelectorAll('.color-swatch').forEach((s, i) => s.classList.toggle('chosen', i === 0));
+  }
+
+  function selectChip(el, prompt) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    if (selectedPrompt === prompt) { selectedPrompt = ''; return; }
+    el.classList.add('active');
+    selectedPrompt = prompt;
+    const ta = document.getElementById('msg-text');
+    if (!ta.value) ta.placeholder = prompt + ' ...';
+  }
+
+  function selectVibe(el) {
+    document.querySelectorAll('.vibe-opt').forEach(v => v.classList.remove('chosen'));
+    el.classList.add('chosen');
+    selectedVibe = el.dataset.vibe;
+  }
+
+  function pickColor(el) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('chosen'));
+    el.classList.add('chosen');
+    selectedColor = el.dataset.color;
+  }
+
+  function handleImage(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      imageData = ev.target.result;
+      document.getElementById('img-preview').src = imageData;
+      document.getElementById('img-preview').style.display = 'block';
+      document.getElementById('upload-placeholder').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitNote() {
+    const msg = document.getElementById('msg-text').value.trim();
+    const name = document.getElementById('msg-name').value.trim();
+    const alter = document.getElementById('msg-alter').value.trim();
+    if (!msg) { alert('Please write a message!'); return; }
+    if (!name) { alert('Please add your name!'); return; }
+    if (!selectedVibe) { alert('Pick a vibe for your note!'); return; }
+
+    const reactions = {};
+    REACTIONS.forEach(r => reactions[r] = 0);
+
+    const note = {
+      id: Date.now(),
+      message: msg,
+      name,
+      alter,
+      prompt: selectedPrompt,
+      vibe: selectedVibe,
+      color: selectedColor,
+      image: imageData || null,
+      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+      reactions,
+      rotation: NOTE_ROTATIONS[Math.floor(Math.random() * NOTE_ROTATIONS.length)]
+    };
+
+    notes.unshift(note);
+    saveNotes();
+    closeModal();
+    renderWall();
+    launchConfetti();
+    checkMilestone();
+  }
+
+  function totalReactions(note) {
+    if (!note.reactions) return 0;
+    return Object.values(note.reactions).reduce((a, b) => a + b, 0);
+  }
+
+  function addReaction(id, emoji, btnEl) {
+    const note = notes.find(n => n.id === id);
+    if (!note) return;
+    if (!note.reactions) { const r = {}; REACTIONS.forEach(e => r[e] = 0); note.reactions = r; }
+    note.reactions[emoji] = (note.reactions[emoji] || 0) + 1;
+    notes.sort((a, b) => totalReactions(b) - totalReactions(a));
+    saveNotes();
+    renderWall();
+    const rect = btnEl.getBoundingClientRect();
+    spawnBurst(emoji, rect.left + rect.width / 2, rect.top);
+  }
+
+  function spawnBurst(emoji, x, y) {
+    for (let i = 0; i < 4; i++) {
+      const el = document.createElement('div');
+      el.className = 'burst-emoji';
+      el.textContent = emoji;
+      el.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+      el.style.top = (y + window.scrollY - 10) + 'px';
+      el.style.animationDelay = (i * 0.06) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1100);
+    }
+  }
+
+  function filterVibe(btn) {
+    document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.vibe;
+    renderWall();
+  }
+
+  function checkMilestone() {
+    const n = notes.length;
+    if (MILESTONES[n] && !shownMilestones.has(n)) {
+      shownMilestones.add(n);
+      const el = document.getElementById('milestone');
+      el.textContent = MILESTONES[n];
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 5000);
+    }
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colors = ['#FF6BF8','#FFE94A','#4BFFA5','#FF5B5B','#5B8FFF','#FF9F4B','#C77DFF','#FF85B3'];
+    const pieces = Array.from({ length: 130 }, () => ({
+      x: Math.random() * canvas.width,
+      y: -10 - Math.random() * 200,
+      w: 6 + Math.random() * 8,
+      h: 10 + Math.random() * 6,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * 360,
+      spin: (Math.random() - 0.5) * 8
+    }));
+    let frame = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+        p.x += p.vx; p.y += p.vy; p.rot += p.spin; p.vy += 0.05;
+      });
+      frame++;
+      if (frame < 190) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    draw();
+  }
+
+  function getLuminance(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255;
+    const g = parseInt(hex.slice(3,5),16)/255;
+    const b = parseInt(hex.slice(5,7),16)/255;
+    return 0.2126*r + 0.7152*g + 0.0722*b;
+  }
+
+  function updateStats() {
+    const total = notes.reduce((a, n) => a + totalReactions(n), 0);
+    document.getElementById('count').textContent = notes.length;
+    document.getElementById('react-total').textContent = total;
+    const vibeCounts = {};
+    notes.forEach(n => { if (n.vibe) vibeCounts[n.vibe] = (vibeCounts[n.vibe] || 0) + 1; });
+    const top = Object.entries(vibeCounts).sort((a,b) => b[1]-a[1])[0];
+    document.getElementById('top-vibe').textContent = top ? (VIBE_EMOJIS[top[0]] + ' ' + top[0]) : '—';
+  }
+
+  function renderWall() {
+    updateStats();
+    const wall = document.getElementById('wall');
+    const empty = document.getElementById('empty-state');
+    const filtered = activeFilter === 'all' ? notes : notes.filter(n => n.vibe === activeFilter);
+
+    if (filtered.length === 0) {
+      wall.innerHTML = '';
+      empty.style.display = 'block';
+      wall.appendChild(empty);
+      return;
+    }
+
+    empty.style.display = 'none';
+    wall.innerHTML = '';
+
+    filtered.forEach((note, idx) => {
+      const muted = 'rgba(26,16,51,0.55)';
+      const dark = '#1A1033';
+
+      const card = document.createElement('div');
+      card.className = 'note-card';
+      card.style.background = note.color;
+      card.style.setProperty('--rot', note.rotation + 'deg');
+      card.style.transform = `rotate(${note.rotation}deg)`;
+      card.style.animationDelay = (idx * 0.045) + 's';
+
+      const reactionHTML = REACTIONS.map(emoji => {
+        const count = (note.reactions && note.reactions[emoji]) || 0;
+        return `<button class="react-btn${count > 0 ? ' reacted' : ''}" onclick="addReaction(${note.id},'${emoji}',this)">${emoji} <span>${count}</span></button>`;
+      }).join('');
+
+      card.innerHTML = `
+        <div class="note-top">
+          ${note.vibe ? `<span class="note-vibe-pill" style="color:${muted}">${VIBE_EMOJIS[note.vibe]} ${note.vibe}</span>` : ''}
+          ${note.prompt ? `<div class="note-prompt" style="color:${muted}">${note.prompt}</div>` : ''}
+          ${note.image && note.image.length > 100 ? `<img class="note-img" src="${note.image}" alt="memory">` : ''}
+          <div class="note-message" style="color:${dark}">"${note.message}"</div>
+          <div class="note-author" style="color:${dark}">— ${note.name}</div>
+          ${note.alter ? `<div class="note-alter" style="color:${muted}">aka ${note.alter}</div>` : ''}
+          <div class="note-date">${note.date}</div>
+        </div>
+        <div class="reaction-bar">${reactionHTML}</div>
+      `;
+      wall.appendChild(card);
+    });
+  }
+
+  function saveNotes() {
+    try { localStorage.setItem('mirriam_notes_v3', JSON.stringify(notes)); } catch(e) {}
+  }
+
+  function loadNotes() {
+    try {
+      const saved = localStorage.getItem('mirriam_notes_v3');
+      if (saved) notes = JSON.parse(saved);
+    } catch(e) {}
+  }
+
+  loadNotes();
+  renderWall();
+</script>
+</body>
+</html>
