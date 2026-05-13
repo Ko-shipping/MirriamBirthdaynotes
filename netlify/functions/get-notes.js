@@ -1,14 +1,15 @@
-import { getStore } from "@netlify/blobs";
+const { getStore } = require("@netlify/blobs");
 
-export default async (req, context) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    });
+exports.handler = async (event) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json",
+  };
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers, body: "ok" };
   }
 
   try {
@@ -22,80 +23,17 @@ export default async (req, context) => {
       })
     );
 
-    // Sort by total reactions descending, then by date descending
-    notes.sort((a, b) => {
+    const valid = notes.filter(Boolean);
+
+    valid.sort((a, b) => {
       const aR = a.reactions ? Object.values(a.reactions).reduce((x, y) => x + y, 0) : 0;
       const bR = b.reactions ? Object.values(b.reactions).reduce((x, y) => x + y, 0) : 0;
       if (bR !== aR) return bR - aR;
       return b.id - a.id;
     });
 
-    return new Response(JSON.stringify(notes), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    return { statusCode: 200, headers, body: JSON.stringify(valid) };
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    return { statusCode: 500, headers, body: JSON.stringify({ error: err.message }) };
   }
 };
-
-export const config = { path: "/api/get-notes" };
-
-import { getStore } from "@netlify/blobs";
-
-export default async (req, context) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    });
-  }
-
-  if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
-  }
-
-  try {
-    const note = await req.json();
-
-    if (!note.id || !note.message || !note.name) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-      });
-    }
-
-    const store = getStore("mirriam-notes");
-    await store.setJSON(String(note.id), note);
-
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  }
-};
-
-export const config = { path: "/api/save-note" };
