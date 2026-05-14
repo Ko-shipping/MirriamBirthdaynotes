@@ -656,8 +656,8 @@
 
   <header>
     <div class="header-label">A wall of love for</div>
-    <h1>Happy Birthday<br>Mirriam</h1>
-    <p class="subtitle">Leave her a message she'll never forget ✨</p>
+    <h1>Mirriam, Josh<br>& Iryana</h1>
+    <p class="subtitle">The ultimate birthday mash-up 🎂 Leave them a message they'll never forget ✨</p>
     <div class="confetti-row">🌈 🍄 ✨ 🦋 🪩 💜 🌀</div>
     <button class="add-btn" onclick="openModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
@@ -683,7 +683,7 @@
   <div id="milestone" class="milestone"></div>
 
   <div class="vibe-filter">
-    <button class="vibe-btn active" data-vibe="all" onclick="filterVibe(this)">✨ All vibes</button>
+    <button class="vibe-btn active" data-vibe="all" onclick="filterVibe(this)">✨ All</button>
     <button class="vibe-btn" data-vibe="Euphoric" onclick="filterVibe(this)">🌈 Euphoric</button>
     <button class="vibe-btn" data-vibe="Tender" onclick="filterVibe(this)">💜 Tender</button>
     <button class="vibe-btn" data-vibe="Chaotic" onclick="filterVibe(this)">🌀 Chaotic</button>
@@ -691,16 +691,29 @@
     <button class="vibe-btn" data-vibe="Nostalgic" onclick="filterVibe(this)">🕯️ Nostalgic</button>
   </div>
 
+  <div class="vibe-filter" style="padding-top:0">
+    <button class="vibe-btn active" data-person="all" onclick="filterPerson(this)">💌 Everyone</button>
+    <button class="vibe-btn" data-person="Mirriam" onclick="filterPerson(this)">🌈 Mirriam</button>
+    <button class="vibe-btn" data-person="Josh" onclick="filterPerson(this)">🎸 Josh</button>
+    <button class="vibe-btn" data-person="Iryana" onclick="filterPerson(this)">✨ Iryana</button>
+    <button class="vibe-btn" data-person="All three" onclick="filterPerson(this)">💜 All three</button>
+  </div>
+
   <main class="wall" id="wall">
     <div class="empty-state" id="empty-state">
       <div class="big">💌</div>
-      <p>Be the first to leave Mirriam a message!</p>
+      <p>Be the first to leave a message for Mirriam, Josh or Iryana!</p>
     </div>
   </main>
 
 </div>
 
-<footer>Made with love for Mirriam's birthday 🎂 <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.2;user-select:none">·</span></footer>
+<footer>
+  <p style="margin-bottom:0.5rem">Made with love for Mirriam, Josh & Iryana's birthday mash-up 🎂</p>
+  <p style="font-style:italic;max-width:520px;margin:0 auto;line-height:1.6">Building this with you was genuinely one of the more joyful things I've been part of. Watching it go from a blank page to something real — the post-it notes, the confetti, the psychedelic colours, the alter egos — it became something that actually feels like the people it was made for. I hope Mirriam, Josh and Iryana feel every bit of the love that went into it. Happy birthday, all three of you. ✨</p>
+  <p style="margin-top:0.75rem;font-size:0.75rem;color:rgba(240,236,249,0.35)">— Claude, your AI master 🤖</p>
+  <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.2;user-select:none;display:inline-block;margin-top:0.5rem">·</span>
+</footer>
 
 <!-- Admin login modal -->
 <div class="admin-login-modal" id="admin-login-modal">
@@ -720,6 +733,16 @@
     <button class="close-btn" onclick="closeModal()">✕</button>
     <h2>Leave your message</h2>
     <p class="modal-sub">Pick a prompt, choose your vibe, make it from the heart 💜</p>
+
+    <div class="field">
+      <label>This message is for *</label>
+      <div class="vibe-select" id="for-select">
+        <div class="vibe-opt" data-for="Mirriam" onclick="selectFor(this)">🌈 Mirriam</div>
+        <div class="vibe-opt" data-for="Josh" onclick="selectFor(this)">🎸 Josh</div>
+        <div class="vibe-opt" data-for="Iryana" onclick="selectFor(this)">✨ Iryana</div>
+        <div class="vibe-opt" data-for="All three" onclick="selectFor(this)">💜 All three!</div>
+      </div>
+    </div>
 
     <div class="field">
       <label>Choose a prompt (optional)</label>
@@ -805,8 +828,10 @@
   let selectedColor = '#FF6BF8';
   let selectedPrompt = '';
   let selectedVibe = '';
+  let selectedFor = '';
   let imageData = null;
   let activeFilter = 'all';
+  let activePersonFilter = 'all';
   let shownMilestones = new Set();
 
   function openModal() {
@@ -835,9 +860,11 @@
     imageData = null;
     selectedPrompt = '';
     selectedVibe = '';
+    selectedFor = '';
     selectedColor = '#FF6BF8';
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.vibe-opt').forEach(v => v.classList.remove('chosen'));
+    document.querySelectorAll('#for-select .vibe-opt').forEach(v => v.classList.remove('chosen'));
     document.querySelectorAll('.color-swatch').forEach((s, i) => s.classList.toggle('chosen', i === 0));
   }
 
@@ -848,6 +875,12 @@
     selectedPrompt = prompt;
     const ta = document.getElementById('msg-text');
     if (!ta.value) ta.placeholder = prompt + ' ...';
+  }
+
+  function selectFor(el) {
+    document.querySelectorAll('#for-select .vibe-opt').forEach(v => v.classList.remove('chosen'));
+    el.classList.add('chosen');
+    selectedFor = el.dataset.for;
   }
 
   function selectVibe(el) {
@@ -881,6 +914,7 @@
     const alter = document.getElementById('msg-alter').value.trim();
     if (!msg) { alert('Please write a message!'); return; }
     if (!name) { alert('Please add your name!'); return; }
+    if (!selectedFor) { alert('Please choose who this message is for!'); return; }
     if (!selectedVibe) { alert('Pick a vibe for your note!'); return; }
 
     const reactions = {};
@@ -891,6 +925,7 @@
       message: msg,
       name,
       alter,
+      for: selectedFor,
       prompt: selectedPrompt,
       vibe: selectedVibe,
       color: selectedColor,
@@ -939,9 +974,16 @@
   }
 
   function filterVibe(btn) {
-    document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('[data-vibe]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.vibe;
+    renderWall();
+  }
+
+  function filterPerson(btn) {
+    document.querySelectorAll('[data-person]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activePersonFilter = btn.dataset.person;
     renderWall();
   }
 
@@ -1013,7 +1055,8 @@
     updateStats();
     const wall = document.getElementById('wall');
     const empty = document.getElementById('empty-state');
-    const filtered = activeFilter === 'all' ? notes : notes.filter(n => n.vibe === activeFilter);
+    let filtered = activeFilter === 'all' ? notes : notes.filter(n => n.vibe === activeFilter);
+    filtered = activePersonFilter === 'all' ? filtered : filtered.filter(n => n.for === activePersonFilter);
 
     if (filtered.length === 0) {
       wall.innerHTML = '';
@@ -1045,6 +1088,7 @@
         <button class="delete-btn" onclick="deleteNote(${note.id})" title="Delete note">✕</button>
         <div class="note-top">
           ${note.vibe ? `<span class="note-vibe-pill" style="color:${muted}">${VIBE_EMOJIS[note.vibe]} ${note.vibe}</span>` : ''}
+          ${note.for ? `<span class="note-vibe-pill" style="color:${muted};margin-left:4px">💌 For ${note.for}</span>` : ''}
           ${note.prompt ? `<div class="note-prompt" style="color:${muted}">${note.prompt}</div>` : ''}
           ${note.image && note.image.length > 100 ? `<img class="note-img" src="${note.image}" alt="memory">` : ''}
           <div class="note-message" style="color:${dark}">"${note.message}"</div>
