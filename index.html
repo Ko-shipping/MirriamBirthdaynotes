@@ -699,12 +699,7 @@
     <button class="vibe-btn" data-person="All three" onclick="filterPerson(this)">💜 All three</button>
   </div>
 
-  <main class="wall" id="wall">
-    <div class="empty-state" id="empty-state">
-      <div class="big">💌</div>
-      <p>Be the first to leave a message for Mirriam, Josh or Iryana!</p>
-    </div>
-  </main>
+  <main class="wall" id="wall"></main>
 
 </div>
 
@@ -1054,19 +1049,15 @@
   function renderWall() {
     updateStats();
     const wall = document.getElementById('wall');
-    const empty = document.getElementById('empty-state');
     let filtered = activeFilter === 'all' ? notes : notes.filter(n => n.vibe === activeFilter);
     filtered = activePersonFilter === 'all' ? filtered : filtered.filter(n => n.for === activePersonFilter);
 
+    wall.innerHTML = '';
+
     if (filtered.length === 0) {
-      wall.innerHTML = '';
-      empty.style.display = 'block';
-      wall.appendChild(empty);
+      wall.innerHTML = `<div class="empty-state"><div class="big">💌</div><p>No messages here yet — be the first!</p></div>`;
       return;
     }
-
-    empty.style.display = 'none';
-    wall.innerHTML = '';
 
     filtered.forEach((note, idx) => {
       const muted = 'rgba(26,16,51,0.55)';
